@@ -4,6 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:workcake/emoji/emoji.dart';
+import 'package:workcake/common/palette.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -100,6 +103,8 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
       CurveTween(curve: Curves.easeIn);
   static final Animatable<double> _halfTween =
       Tween<double>(begin: 0.0, end: 0.5);
+  static final Animatable<double> _quarterTween = 
+      Tween<double>(begin: 0.0, end: 0.25);
 
   final ColorTween _borderColorTween = ColorTween();
   final ColorTween _headerColorTween = ColorTween();
@@ -121,7 +126,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
     super.initState();
     _controller = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _controller.drive(_easeInTween);
-    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+    _iconTurns = _controller.drive(_quarterTween.chain(_easeInTween));
     _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
@@ -204,18 +209,25 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
-            child: ListTile(
-              onTap: toggle,
-              leading: widget.leading,
-              title: widget.title,
-              subtitle: widget.subtitle,
-              isThreeLine: widget.isThreeLine,
-              trailing: widget.trailing ??
+            child: HoverItem(
+              colorHover: Palette.hoverColorDefault,
+              child: ListTile(
+                onTap: toggle,
+                leading: widget.leading ?? 
                   RotationTransition(
                     turns: _iconTurns,
-                    child: const Icon(Icons.expand_more),
+                    child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
                   ),
-            ),
+                title: widget.title,
+                subtitle: widget.subtitle,
+                isThreeLine: widget.isThreeLine,
+                trailing: widget.trailing ??
+                  RotationTransition(
+                    turns: _iconTurns,
+                    child: const Icon(Icons.expand_more)
+                  ),
+              ),
+            )
           ),
           ClipRect(
             child: Align(
