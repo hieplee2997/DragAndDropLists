@@ -124,6 +124,22 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     return toReturn;
   }
 
+  Widget generateWigetWithoutChildren() {
+    Widget expansionTileWithoutChildren = ProgrammaticExpansionTile(
+      title: title,
+      listKey: listKey,
+      subtitle: subtitle,
+      trailing: trailing,
+      leading: leading,
+      disableTopAndBottomBorders: disableTopAndBottomBorders,
+      backgroundColor: backgroundColor,
+      initiallyExpanded: initiallyExpanded,
+      onExpansionChanged: _onSetExpansion,
+      key: _expansionKey,
+    );
+    return expansionTileWithoutChildren;
+  }
+
   List<Widget> _generateDragAndDropListInnerContents(
       DragAndDropBuilderParameters parameters) {
     var contents = <Widget>[];

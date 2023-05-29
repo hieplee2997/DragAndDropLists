@@ -41,6 +41,8 @@ class _ListTileExample extends State<ExpansionTileExample> {
         children: List.generate(_lists.length, (index) => _buildList(index)),
         onItemReorder: _onItemReorder,
         onListReorder: _onListReorder,
+        itemDragOnLongPress: false,
+        listDragOnLongPress: false,
         // listGhost is mandatory when using expansion tiles to prevent multiple widgets using the same globalkey
         listGhost: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0),

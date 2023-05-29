@@ -33,6 +33,8 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
   Widget build(BuildContext context) {
     Widget dragAndDropListContents =
         widget.dragAndDropList.generateWidget(widget.parameters);
+    Widget dragAndDropListFeedback = 
+        widget.dragAndDropList.generateWigetWithoutChildren();
 
     Widget draggable;
     if (widget.dragAndDropList.canDrag) {
@@ -106,7 +108,7 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
           axis: draggableAxis(),
           child: dragAndDropListContents,
           feedback:
-              buildFeedbackWithoutHandle(context, dragAndDropListContents),
+              buildFeedbackWithoutHandle(context, dragAndDropListFeedback),
           childWhenDragging: Container(),
           onDragStarted: () => _setDragging(true),
           onDragCompleted: () => _setDragging(false),
@@ -255,7 +257,7 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
   }
 
   Container buildFeedbackWithoutHandle(
-      BuildContext context, Widget dragAndDropListContents) {
+      BuildContext context, Widget dragAndDropListFeedback) {
     return Container(
       width: widget.parameters.axis == Axis.vertical
           ? (widget.parameters.listDraggingWidth ??
@@ -268,7 +270,8 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
           decoration: widget.parameters.listDecorationWhileDragging,
           child: Directionality(
             textDirection: Directionality.of(context),
-            child: dragAndDropListContents,
+            // child: Container(color: Colors.red, child: Text("Hello"), width: 40),
+            child: dragAndDropListFeedback,
           ),
         ),
       ),
