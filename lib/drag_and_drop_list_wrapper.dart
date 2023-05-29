@@ -24,6 +24,15 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
   Size _containerSize = Size.zero;
   Size _dragHandleSize = Size.zero;
 
+  Offset _tapPosition = Offset.zero;
+  void _getTapPosition(TapDownDetails details) {
+    final RenderBox referenceBox = context.findRenderObject() as RenderBox;
+    print('re:$referenceBox');
+    setState(() {
+      _tapPosition = referenceBox.globalToLocal(details.globalPosition);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,7 +115,38 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
         draggable = Draggable<DragAndDropListInterface>(
           data: widget.dragAndDropList,
           axis: draggableAxis(),
-          child: dragAndDropListContents,
+          child: GestureDetector(
+            onTapDown: (details) {
+              _getTapPosition(details);
+            },
+            onSecondaryTap: () async {
+                  final RenderObject? overlay =
+        Overlay.of(context).context.findRenderObject();
+              await showMenu(
+                context: context, 
+                // how to determine where right click?
+                position: RelativeRect.fromRect(
+            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
+            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
+                overlay.paintBounds.size.height)),
+                items: [
+                  const PopupMenuItem(
+                    value: 'favorites',
+                    child: Text('Add To Favorites'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'comment',
+                    child: Text('Write Comment'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'hide',
+                    child: Text('Hide'),
+                  ),
+                ]
+              );
+            },
+            child: dragAndDropListContents,
+          ),
           feedback:
               buildFeedbackWithoutHandle(context, dragAndDropListFeedback),
           childWhenDragging: Container(),
