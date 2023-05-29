@@ -1,5 +1,5 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
-import 'package:example/navigation_drawer.dart';
+import 'package:example/navigation_drawer.dart' as navi;
 import 'package:flutter/material.dart';
 
 class HorizontalExample extends StatefulWidget {
@@ -36,7 +36,7 @@ class _HorizontalExample extends State<HorizontalExample> {
       appBar: AppBar(
         title: const Text('Horizontal'),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const navi.NavigationDrawer(),
       body: DragAndDropLists(
         children: List.generate(_lists.length, (index) => _buildList(index)),
         onItemReorder: _onItemReorder,
