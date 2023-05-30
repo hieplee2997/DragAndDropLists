@@ -6,6 +6,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_item_target.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_item_wrapper.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/programmatic_expansion_tile.dart';
+import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 
 typedef void OnExpansionChanged(bool expanded);
@@ -37,6 +38,10 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   /// Disable to borders displayed at the top and bottom when expanded
   final bool disableTopAndBottomBorders;
 
+  final Function()? firstFunction;
+  final Function()? secondFunction;
+  final int numberFunction;
+  
   ValueNotifier<bool> _expanded = ValueNotifier<bool>(true);
   GlobalKey<ProgrammaticExpansionTileState> _expansionKey =
       GlobalKey<ProgrammaticExpansionTileState>();
@@ -55,6 +60,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     required this.listKey,
     this.canDrag = true,
     this.disableTopAndBottomBorders = false,
+    this.numberFunction = 0,
+    this.firstFunction,
+    this.secondFunction,
   }) {
     _expanded.value = initiallyExpanded;
   }
@@ -121,7 +129,20 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       },
     );
 
-    return toReturn;
+    return  ContextMenuRegion(
+            child: toReturn,
+            contextMenu: GenericContextMenu(buttonConfigs: 
+            numberFunction > 2 || numberFunction <= 0 ? [] : [
+              if (numberFunction >= 1 && firstFunction != null)
+              ContextMenuButtonConfig("readyyy", onPressed: () {
+                firstFunction!();
+              }),
+              if (numberFunction > 1 && secondFunction != null)
+              ContextMenuButtonConfig("cac", onPressed: () {
+                secondFunction!();
+              })
+            ]),
+          );
   }
 
   Widget generateWigetWithoutChildren() {

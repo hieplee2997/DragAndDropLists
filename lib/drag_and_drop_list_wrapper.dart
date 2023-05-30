@@ -2,6 +2,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_builder_parameters.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_handle.dart';
 import 'package:drag_and_drop_lists/measure_size.dart';
+import 'package:context_menus/context_menus.dart';
 import 'package:flutter/material.dart';
 
 class DragAndDropListWrapper extends StatefulWidget {
@@ -23,15 +24,6 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
   bool _dragging = false;
   Size _containerSize = Size.zero;
   Size _dragHandleSize = Size.zero;
-
-  Offset _tapPosition = Offset.zero;
-  void _getTapPosition(TapDownDetails details) {
-    final RenderBox referenceBox = context.findRenderObject() as RenderBox;
-    print('re:$referenceBox');
-    setState(() {
-      _tapPosition = referenceBox.globalToLocal(details.globalPosition);
-    });
-  }
 
   @override
   void initState() {
@@ -115,38 +107,7 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
         draggable = Draggable<DragAndDropListInterface>(
           data: widget.dragAndDropList,
           axis: draggableAxis(),
-          child: GestureDetector(
-            onTapDown: (details) {
-              _getTapPosition(details);
-            },
-            onSecondaryTap: () async {
-                  final RenderObject? overlay =
-        Overlay.of(context).context.findRenderObject();
-              await showMenu(
-                context: context, 
-                // how to determine where right click?
-                position: RelativeRect.fromRect(
-            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
-                overlay.paintBounds.size.height)),
-                items: [
-                  const PopupMenuItem(
-                    value: 'favorites',
-                    child: Text('Add To Favorites'),
-                  ),
-                  const PopupMenuItem(
-                    value: 'comment',
-                    child: Text('Write Comment'),
-                  ),
-                  const PopupMenuItem(
-                    value: 'hide',
-                    child: Text('Hide'),
-                  ),
-                ]
-              );
-            },
-            child: dragAndDropListContents,
-          ),
+          child: dragAndDropListContents,
           feedback:
               buildFeedbackWithoutHandle(context, dragAndDropListFeedback),
           childWhenDragging: Container(),
