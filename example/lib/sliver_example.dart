@@ -1,5 +1,5 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
-import 'package:example/navigation_drawer.dart';
+import 'package:example/navigation_drawer.dart' as navi;
 import 'package:flutter/material.dart';
 
 class SliverExample extends StatefulWidget {
@@ -61,7 +61,7 @@ class _SliverExample extends State<SliverExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawer(),
+      drawer: const navi.NavigationDrawer(),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: <Widget>[

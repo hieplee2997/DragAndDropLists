@@ -24,6 +24,7 @@ import 'package:drag_and_drop_lists/drag_handle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:context_menus/context_menus.dart';
 
 export 'package:drag_and_drop_lists/drag_and_drop_builder_parameters.dart';
 export 'package:drag_and_drop_lists/drag_and_drop_item.dart';
@@ -448,7 +449,7 @@ class DragAndDropListsState extends State<DragAndDropLists> {
           bucket: _pageStorageBucket,
         );
       }
-      return outerListHolder;
+      return ContextMenuOverlay(child: outerListHolder);
     } else {
       return Center(
         child: Column(

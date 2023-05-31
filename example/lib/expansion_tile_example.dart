@@ -1,5 +1,5 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
-import 'package:example/navigation_drawer.dart';
+import 'package:example/navigation_drawer.dart' as navi;
 import 'package:flutter/material.dart';
 
 class ExpansionTileExample extends StatefulWidget {
@@ -36,11 +36,13 @@ class _ListTileExample extends State<ExpansionTileExample> {
       appBar: AppBar(
         title: const Text('Expansion Tiles'),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const navi.NavigationDrawer(),
       body: DragAndDropLists(
         children: List.generate(_lists.length, (index) => _buildList(index)),
         onItemReorder: _onItemReorder,
         onListReorder: _onListReorder,
+        itemDragOnLongPress: false,
+        listDragOnLongPress: false,
         // listGhost is mandatory when using expansion tiles to prevent multiple widgets using the same globalkey
         listGhost: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0),
@@ -62,6 +64,10 @@ class _ListTileExample extends State<ExpansionTileExample> {
   _buildList(int outerIndex) {
     var innerList = _lists[outerIndex];
     return DragAndDropListExpansion(
+      firstFunction: null,
+      secondFunction: () {
+      },
+      numberFunction: 2,
       title: Text('List ${innerList.name}'),
       subtitle: Text('Subtitle ${innerList.name}'),
       leading: const Icon(Icons.ac_unit),

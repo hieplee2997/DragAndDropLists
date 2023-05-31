@@ -185,4 +185,10 @@ class DragAndDropList implements DragAndDropListInterface {
     }
     return contents;
   }
+  
+  @override
+  Widget generateWigetWithoutChildren() {
+    return Container();
+    // throw UnimplementedError();
+  }
 }
