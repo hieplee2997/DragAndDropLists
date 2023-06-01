@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:context_menus/context_menus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 // import 'package:workcake/emoji/emoji.dart';
 // import 'package:workcake/common/palette.dart';
@@ -217,22 +218,21 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
-              child: MouseRegion(
-                onEnter: (event) {
-                  setState(() {
-                    _isHover = true;
-                  });
-                },
-                onExit: (event) {
-                  setState(() {
-                    _isHover = false;
-                  });
-                },
-                child: GestureDetector(
-                  onSecondaryTap: () {
-                    if (widget.doFunc != null) {
-                      widget.doFunc!();
-                    }
+              child: ContextMenuRegion(
+                contextMenu: GenericContextMenu(buttonConfigs: [
+                    ContextMenuButtonConfig('gfdgdfg', onPressed: () {}),
+                    ContextMenuButtonConfig('gdfgdfg', onPressed: (){})
+                ]),
+                child: MouseRegion(
+                  onEnter: (event) {
+                    setState(() {
+                      _isHover = true;
+                    });
+                  },
+                  onExit: (event) {
+                    setState(() {
+                      _isHover = false;
+                    });
                   },
                   child: ListTile(
                     onTap: toggle,
