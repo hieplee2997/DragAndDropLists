@@ -44,7 +44,11 @@ class ProgrammaticExpansionTile extends StatefulWidget {
     this.initiallyExpanded = false,
     this.disableTopAndBottomBorders = false,
     this.pinnedTrailing = false,
-    this.doFunc
+    this.firstFunction,
+    this.titleFirstFunction,
+    this.titleSecondFunction,
+    this.secondFunction,
+    this.numberFunction = 0
   }) : super(key: key);
 
   final Key listKey;
@@ -96,8 +100,18 @@ class ProgrammaticExpansionTile extends StatefulWidget {
   /// Pin trailing in any case (case hover and not hover)
   final bool pinnedTrailing;
 
-  final Function()? doFunc;
+  /// Function when right click 
+  final Function()? firstFunction;
+  final Function()? secondFunction;
 
+  /// Title will show if function != null
+  final String? titleFirstFunction;
+  final String? titleSecondFunction;
+
+  /// number of function will show to user (now it supports to 2 functions) 
+  /// 
+  /// to expand more func, you can edit DragAndDropLists library of thaidmfinnick
+  final int numberFunction;
   @override
   ProgrammaticExpansionTileState createState() =>
       ProgrammaticExpansionTileState();
@@ -219,9 +233,18 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
               child: ContextMenuRegion(
-                contextMenu: GenericContextMenu(buttonConfigs: [
-                    ContextMenuButtonConfig('gfdgdfg', onPressed: () {}),
-                    ContextMenuButtonConfig('gdfgdfg', onPressed: (){})
+                contextMenu: GenericContextMenu(
+                  // if number func > 2 or < 0 return [];
+                  buttonConfigs: widget.numberFunction > 2 || widget.numberFunction <= 0 ? [] :
+                  [
+                    if (widget.firstFunction != null && widget.titleFirstFunction != null && widget.numberFunction >= 1)
+                    ContextMenuButtonConfig(widget.titleFirstFunction!, onPressed: () {
+                      widget.firstFunction!();
+                    }),
+                    if (widget.secondFunction != null && widget.titleSecondFunction != null && widget.numberFunction > 1)
+                    ContextMenuButtonConfig(widget.titleSecondFunction!, onPressed: () {
+                      widget.secondFunction!();
+                    })
                 ]),
                 child: MouseRegion(
                   onEnter: (event) {

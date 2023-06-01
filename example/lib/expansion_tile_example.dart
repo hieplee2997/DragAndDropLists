@@ -67,6 +67,15 @@ class _ListTileExample extends State<ExpansionTileExample> {
       title: Text('List ${innerList.name}'),
       subtitle: Text('Subtitle ${innerList.name}'),
       leading: const Icon(Icons.ac_unit),
+      firstFunction: () {
+        print('1');
+      },
+      titleFirstFunction: "1",
+      secondFunction: () {
+        print('2');
+      },
+      titleSecondFunction: "2",
+      numberFunction: 1,
       pinnedTrailing: outerIndex <= 3 ? true : false,
       trailing: Icon(Icons.abc_sharp),
       children: List.generate(innerList.children.length,
