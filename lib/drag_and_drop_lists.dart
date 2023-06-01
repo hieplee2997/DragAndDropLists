@@ -449,7 +449,7 @@ class DragAndDropListsState extends State<DragAndDropLists> {
           bucket: _pageStorageBucket,
         );
       }
-      return ContextMenuOverlay(child: outerListHolder);
+      return outerListHolder;
     } else {
       return Center(
         child: Column(
