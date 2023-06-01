@@ -38,7 +38,17 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final bool disableTopAndBottomBorders;
 
   final bool pinnedTrailing;
-  final Function()? doFunc;
+
+  /// Function when right click 
+  final Function()? firstFunction;
+  final Function()? secondFunction;
+
+  /// Title will show if function != null
+  final String? titleFirstFunction;
+  final String? titleSecondFunction;
+
+  /// number of function will show to user
+  final int numberFunction;
   
   ValueNotifier<bool> _expanded = ValueNotifier<bool>(true);
   GlobalKey<ProgrammaticExpansionTileState> _expansionKey =
@@ -59,7 +69,11 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.canDrag = true,
     this.disableTopAndBottomBorders = false,
     this.pinnedTrailing = false,
-    this.doFunc
+    this.firstFunction,
+    this.titleFirstFunction,
+    this.titleSecondFunction,
+    this.secondFunction,
+    this.numberFunction = 0
   }) {
     _expanded.value = initiallyExpanded;
   }
@@ -81,7 +95,11 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       key: _expansionKey,
       children: contents,
       pinnedTrailing: pinnedTrailing,
-      doFunc: doFunc,
+      firstFunction: firstFunction,
+      secondFunction: secondFunction,
+      titleFirstFunction: titleFirstFunction,
+      titleSecondFunction: titleSecondFunction,
+      numberFunction: numberFunction,
     );
 
     if (params.listDecoration != null) {
