@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  context_menus: 1.0.1
 
 dev_dependencies:
   flutter_test:

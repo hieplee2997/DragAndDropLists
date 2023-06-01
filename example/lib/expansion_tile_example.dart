@@ -64,13 +64,11 @@ class _ListTileExample extends State<ExpansionTileExample> {
   _buildList(int outerIndex) {
     var innerList = _lists[outerIndex];
     return DragAndDropListExpansion(
-      firstFunction: null,
-      secondFunction: () {
-      },
-      numberFunction: 2,
       title: Text('List ${innerList.name}'),
       subtitle: Text('Subtitle ${innerList.name}'),
       leading: const Icon(Icons.ac_unit),
+      pinnedTrailing: outerIndex <= 3 ? true : false,
+      trailing: Icon(Icons.abc_sharp),
       children: List.generate(innerList.children.length,
           (index) => _buildItem(innerList.children[index])),
       listKey: ObjectKey(innerList),
