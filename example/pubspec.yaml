@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  context_menus: 1.0.1
 
   drag_and_drop_lists:
     path: ../

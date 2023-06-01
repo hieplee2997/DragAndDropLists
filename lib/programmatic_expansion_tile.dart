@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:workcake/emoji/emoji.dart';
-import 'package:workcake/common/palette.dart';
+// import 'package:workcake/emoji/emoji.dart';
+// import 'package:workcake/common/palette.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -42,6 +42,8 @@ class ProgrammaticExpansionTile extends StatefulWidget {
     this.trailing,
     this.initiallyExpanded = false,
     this.disableTopAndBottomBorders = false,
+    this.pinnedTrailing = false,
+    this.doFunc
   }) : super(key: key);
 
   final Key listKey;
@@ -90,6 +92,11 @@ class ProgrammaticExpansionTile extends StatefulWidget {
   /// Disable to borders displayed at the top and bottom when expanded
   final bool disableTopAndBottomBorders;
 
+  /// Pin trailing in any case (case hover and not hover)
+  final bool pinnedTrailing;
+
+  final Function()? doFunc;
+
   @override
   ProgrammaticExpansionTileState createState() =>
       ProgrammaticExpansionTileState();
@@ -120,6 +127,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
   late Animation<Color?> _backgroundColor;
 
   bool _isExpanded = false;
+  bool _isHover = false;
 
   @override
   void initState() {
@@ -209,25 +217,42 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
-            child: HoverItem(
-              colorHover: Palette.hoverColorDefault,
-              child: ListTile(
-                onTap: toggle,
-                leading: widget.leading ?? 
-                  RotationTransition(
-                    turns: _iconTurns,
-                    child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
+              child: MouseRegion(
+                onEnter: (event) {
+                  setState(() {
+                    _isHover = true;
+                  });
+                },
+                onExit: (event) {
+                  setState(() {
+                    _isHover = false;
+                  });
+                },
+                child: GestureDetector(
+                  onSecondaryTap: () {
+                    if (widget.doFunc != null) {
+                      widget.doFunc!();
+                    }
+                  },
+                  child: ListTile(
+                    onTap: toggle,
+                    leading: widget.leading ?? 
+                      RotationTransition(
+                        turns: _iconTurns,
+                        child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
+                      ),
+                    title: widget.title,
+                    subtitle: widget.subtitle,
+                    isThreeLine: widget.isThreeLine,
+                    trailing: widget.pinnedTrailing ? widget.trailing : 
+                      _isHover ? widget.trailing ??
+                      RotationTransition(
+                        turns: _iconTurns,
+                        child: const Icon(Icons.expand_more)
+                      ) : SizedBox(),
                   ),
-                title: widget.title,
-                subtitle: widget.subtitle,
-                isThreeLine: widget.isThreeLine,
-                trailing: widget.trailing ??
-                  RotationTransition(
-                    turns: _iconTurns,
-                    child: const Icon(Icons.expand_more)
-                  ),
+                ),
               ),
-            )
           ),
           ClipRect(
             child: Align(
