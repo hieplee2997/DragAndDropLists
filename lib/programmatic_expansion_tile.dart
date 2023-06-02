@@ -257,23 +257,27 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                       _isHover = false;
                     });
                   },
-                  child: ListTile(
-                    hoverColor: Palette.hoverColorDefault,
-                    onTap: toggle,
-                    leading: widget.leading ?? 
-                      RotationTransition(
-                        turns: _iconTurns,
-                        child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
-                      ),
-                    title: widget.title,
-                    subtitle: widget.subtitle,
-                    isThreeLine: widget.isThreeLine,
-                    trailing: widget.pinnedTrailing ? widget.trailing : 
-                      _isHover ? widget.trailing ??
-                      RotationTransition(
-                        turns: _iconTurns,
-                        child: const Icon(Icons.expand_more)
-                      ) : SizedBox(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _isHover ? Palette.hoverColorDefault : null
+                    ),
+                    child: ListTile(
+                      onTap: toggle,
+                      leading: widget.leading ?? 
+                        RotationTransition(
+                          turns: _iconTurns,
+                          child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
+                        ),
+                      title: widget.title,
+                      subtitle: widget.subtitle,
+                      isThreeLine: widget.isThreeLine,
+                      trailing: widget.pinnedTrailing ? widget.trailing : 
+                        _isHover ? widget.trailing ??
+                        RotationTransition(
+                          turns: _iconTurns,
+                          child: const Icon(Icons.expand_more)
+                        ) : SizedBox(),
+                    ),
                   ),
                 ),
               ),
