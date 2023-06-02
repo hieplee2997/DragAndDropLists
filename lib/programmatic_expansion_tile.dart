@@ -7,7 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:context_menus/context_menus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 // import 'package:workcake/emoji/emoji.dart';
-// import 'package:workcake/common/palette.dart';
+import 'package:workcake/common/palette.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -258,6 +258,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                     });
                   },
                   child: ListTile(
+                    hoverColor: Palette.hoverColorDefault,
                     onTap: toggle,
                     leading: widget.leading ?? 
                       RotationTransition(
