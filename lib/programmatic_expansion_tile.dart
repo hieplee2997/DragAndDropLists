@@ -233,6 +233,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
               child: ContextMenuRegion(
+                enableLongPress: false,
                 contextMenu: GenericContextMenu(
                   // if number func > 2 or < 0 return [];
                   buttonConfigs: widget.numberFunction > 2 || widget.numberFunction <= 0 ? [] :

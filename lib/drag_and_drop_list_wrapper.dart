@@ -91,11 +91,12 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
         );
       } else if (widget.parameters.dragOnLongPress) {
         draggable = LongPressDraggable<DragAndDropListInterface>(
+          delay: const Duration(milliseconds: 250),
           data: widget.dragAndDropList,
           axis: draggableAxis(),
           child: dragAndDropListContents,
           feedback:
-              buildFeedbackWithoutHandle(context, dragAndDropListContents),
+              buildFeedbackWithoutHandle(context, dragAndDropListFeedback),
           childWhenDragging: Container(),
           onDragStarted: () => _setDragging(true),
           onDragCompleted: () => _setDragging(false),
