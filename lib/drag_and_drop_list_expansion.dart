@@ -47,6 +47,10 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final String? titleFirstFunction;
   final String? titleSecondFunction;
 
+  /// Icon will show if function != null
+  final Widget? iconFirstFunction;
+  final Widget? iconSecondFunction;
+
   /// number of function will show to user
   final int numberFunction;
   
@@ -73,7 +77,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.titleFirstFunction,
     this.titleSecondFunction,
     this.secondFunction,
-    this.numberFunction = 0
+    this.numberFunction = 0, 
+    this.iconFirstFunction,
+    this.iconSecondFunction
   }) {
     _expanded.value = initiallyExpanded;
   }
@@ -92,7 +98,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
+      key: Key("-279"),
       children: contents,
       pinnedTrailing: pinnedTrailing,
       firstFunction: firstFunction,
@@ -100,6 +106,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       titleFirstFunction: titleFirstFunction,
       titleSecondFunction: titleSecondFunction,
       numberFunction: numberFunction,
+      iconFirstFunction: iconFirstFunction,
+      iconSecondFunction: iconSecondFunction,
     );
 
     if (params.listDecoration != null) {
@@ -160,7 +168,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
+      key: Key("-279"),
     );
     return expansionTileWithoutChildren;
   }
