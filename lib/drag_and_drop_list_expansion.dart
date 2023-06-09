@@ -55,8 +55,6 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final int numberFunction;
   
   ValueNotifier<bool> _expanded = ValueNotifier<bool>(true);
-  GlobalKey<ProgrammaticExpansionTileState> _expansionKey =
-      GlobalKey<ProgrammaticExpansionTileState>();
 
   DragAndDropListExpansion({
     this.children,
@@ -98,7 +96,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: Key("-279"),
+      key: listKey,
       children: contents,
       pinnedTrailing: pinnedTrailing,
       firstFunction: firstFunction,
@@ -168,7 +166,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: Key("-279"),
+      key: listKey,
     );
     return expansionTileWithoutChildren;
   }
@@ -232,7 +230,6 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   collapse() {
     if (!isExpanded) {
       _expanded.value = false;
-      _expansionKey.currentState!.collapse();
     }
   }
 
@@ -240,7 +237,6 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   expand() {
     if (!isExpanded) {
       _expanded.value = true;
-      _expansionKey.currentState!.expand();
     }
   }
 
