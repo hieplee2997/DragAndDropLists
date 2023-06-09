@@ -29,6 +29,10 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
     super.initState();
   }
 
+  @override void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget dragAndDropListContents =

@@ -92,7 +92,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
+      key: Key("-279"),
       children: contents,
       pinnedTrailing: pinnedTrailing,
       firstFunction: firstFunction,
@@ -160,7 +160,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
+      key: Key("-279"),
     );
     return expansionTileWithoutChildren;
   }
