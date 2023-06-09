@@ -5,9 +5,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:context_menus/context_menus.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+// import 'package:phosphor_flutter/phosphor_flutter.dart';
 // import 'package:workcake/emoji/emoji.dart';
-import 'package:workcake/common/palette.dart';
+// import 'package:workcake/common/palette.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -48,7 +48,9 @@ class ProgrammaticExpansionTile extends StatefulWidget {
     this.titleFirstFunction,
     this.titleSecondFunction,
     this.secondFunction,
-    this.numberFunction = 0
+    this.numberFunction = 0, 
+    this.iconFirstFunction, 
+    this.iconSecondFunction
   }) : super(key: key);
 
   final Key listKey;
@@ -107,6 +109,10 @@ class ProgrammaticExpansionTile extends StatefulWidget {
   /// Title will show if function != null
   final String? titleFirstFunction;
   final String? titleSecondFunction;
+
+  /// Icon will show if function != null
+  final Widget? iconFirstFunction;
+  final Widget? iconSecondFunction;
 
   /// number of function will show to user (now it supports to 2 functions) 
   /// 
@@ -239,13 +245,19 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                   buttonConfigs: widget.numberFunction > 2 || widget.numberFunction <= 0 ? [] :
                   [
                     if (widget.firstFunction != null && widget.titleFirstFunction != null && widget.numberFunction >= 1)
-                    ContextMenuButtonConfig(widget.titleFirstFunction!, onPressed: () {
-                      widget.firstFunction!();
-                    }),
+                    ContextMenuButtonConfig(widget.titleFirstFunction!,
+                      icon: widget.iconFirstFunction,
+                      onPressed: () {
+                        widget.firstFunction!();
+                      }
+                    ),
                     if (widget.secondFunction != null && widget.titleSecondFunction != null && widget.numberFunction > 1)
-                    ContextMenuButtonConfig(widget.titleSecondFunction!, onPressed: () {
-                      widget.secondFunction!();
-                    })
+                    ContextMenuButtonConfig(widget.titleSecondFunction!,
+                    icon: widget.iconSecondFunction,
+                      onPressed: () {
+                        widget.secondFunction!();
+                      }
+                    )
                 ]),
                 child: MouseRegion(
                   onEnter: (event) {
@@ -260,14 +272,14 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _isHover ? Palette.hoverColorDefault : null
+                      color: _isHover ? Colors.blue : null
                     ),
                     child: ListTile(
                       onTap: toggle,
                       leading: widget.leading ?? 
                         RotationTransition(
                           turns: _iconTurns,
-                          child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
+                          child: const Icon(Icons.abc, color: Color(0xffa9acb6), size: 16)
                         ),
                       title: widget.title,
                       subtitle: widget.subtitle,
