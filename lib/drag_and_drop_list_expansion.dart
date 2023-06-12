@@ -8,7 +8,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/programmatic_expansion_tile.dart';
 import 'package:flutter/material.dart';
 
-typedef void OnExpansionChanged(bool expanded);
+// typedef void OnExpansionChanged(bool expanded);
 
 /// This class mirrors flutter's [ExpansionTile], with similar options.
 class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
@@ -23,7 +23,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final Key listKey;
 
   /// This function will be called when the expansion of a tile is changed.
-  final OnExpansionChanged? onExpansionChanged;
+  // final OnExpansionChanged? onExpansionChanged;
+  final ValueChanged<bool>? onExpansionChanged;
+
   final Color? backgroundColor;
   final List<DragAndDropItem>? children;
   final Widget? contentsWhenEmpty;
@@ -95,7 +97,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       disableTopAndBottomBorders: disableTopAndBottomBorders,
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: _onSetExpansion,
+      onExpansionChanged: onExpansionChanged,
       key: listKey,
       children: contents,
       pinnedTrailing: pinnedTrailing,
@@ -165,7 +167,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       disableTopAndBottomBorders: disableTopAndBottomBorders,
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: _onSetExpansion,
+      onExpansionChanged: onExpansionChanged,
       key: listKey,
     );
     return expansionTileWithoutChildren;
@@ -220,17 +222,17 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
 
   @override
   toggleExpanded() {
-    if (isExpanded)
-      collapse();
-    else
-      expand();
+    // if (isExpanded)
+    //   collapse();
+    // else
+    //   expand();
   }
 
   @override
   collapse() {
-    if (!isExpanded) {
-      _expanded.value = false;
-    }
+    // if (!isExpanded) {
+    //   _expanded.value = false;
+    // }
   }
 
   @override
@@ -240,11 +242,11 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     }
   }
 
-  _onSetExpansion(bool expanded) {
-    _expanded.value = expanded;
+  // _onSetExpansion(bool expanded) {
+  //   // _expanded.value = expanded;
 
-    if (onExpansionChanged != null) onExpansionChanged!(expanded);
-  }
+  //   // if (onExpansionChanged != null) onExpansionChanged!(expanded);
+  // }
 
   @override
   get isExpanded => _expanded.value;
