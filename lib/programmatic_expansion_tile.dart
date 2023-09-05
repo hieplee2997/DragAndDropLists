@@ -215,7 +215,6 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
   //   widget.onExpansionChanged?.call(_isExpanded);
   // }
   void _setExpanded(bool expanded) {
-    print('sssss');
     if (_isExpanded != expanded) {
       setState(() {
         _isExpanded = expanded;

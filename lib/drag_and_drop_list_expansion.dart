@@ -100,7 +100,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: listKey,
+      key: _expansionKey,
       children: contents,
       pinnedTrailing: pinnedTrailing,
       firstFunction: firstFunction,
@@ -170,7 +170,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
       onExpansionChanged: _onSetExpansion,
-      key: listKey,
+      key: _expansionKey,
     );
     return expansionTileWithoutChildren;
   }
@@ -234,6 +234,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   collapse() {
     if (!isExpanded) {
       _expanded.value = false;
+      _expansionKey.currentState!.collapse();
     }
   }
 
@@ -241,6 +242,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   expand() {
     if (!isExpanded) {
       _expanded.value = true;
+      _expansionKey.currentState!.expand();
     }
   }
 
