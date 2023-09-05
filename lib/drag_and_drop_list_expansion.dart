@@ -57,6 +57,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final int numberFunction;
   
   ValueNotifier<bool> _expanded = ValueNotifier<bool>(true);
+  GlobalKey<ProgrammaticExpansionTileState> _expansionKey =
+      GlobalKey<ProgrammaticExpansionTileState>();
 
   DragAndDropListExpansion({
     this.children,
@@ -97,7 +99,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       disableTopAndBottomBorders: disableTopAndBottomBorders,
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: onExpansionChanged,
+      onExpansionChanged: _onSetExpansion,
       key: listKey,
       children: contents,
       pinnedTrailing: pinnedTrailing,
@@ -167,7 +169,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       disableTopAndBottomBorders: disableTopAndBottomBorders,
       backgroundColor: backgroundColor,
       initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: onExpansionChanged,
+      onExpansionChanged: _onSetExpansion,
       key: listKey,
     );
     return expansionTileWithoutChildren;
@@ -222,17 +224,17 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
 
   @override
   toggleExpanded() {
-    // if (isExpanded)
-    //   collapse();
-    // else
-    //   expand();
+    if (isExpanded)
+      collapse();
+    else
+      expand();
   }
 
   @override
   collapse() {
-    // if (!isExpanded) {
-    //   _expanded.value = false;
-    // }
+    if (!isExpanded) {
+      _expanded.value = false;
+    }
   }
 
   @override
@@ -242,11 +244,11 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     }
   }
 
-  // _onSetExpansion(bool expanded) {
-  //   // _expanded.value = expanded;
+  _onSetExpansion(bool expanded) {
+    _expanded.value = expanded;
 
-  //   // if (onExpansionChanged != null) onExpansionChanged!(expanded);
-  // }
+    if (onExpansionChanged != null) onExpansionChanged!(expanded);
+  }
 
   @override
   get isExpanded => _expanded.value;
