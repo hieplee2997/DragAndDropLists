@@ -162,7 +162,9 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
     _backgroundColor =
         _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.maybeOf(context)?.readState(context, identifier: widget.listKey) as bool? ?? widget.initiallyExpanded;
+    // _isExpanded = PageStorage.maybeOf(context)?.readState(context, identifier: widget.listKey) as bool? ?? widget.initiallyExpanded;
+     _isExpanded = PageStorage.maybeOf(context)?.readState(context, identifier: widget.listKey) as bool? ??
+        widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 1.0;
 
     // Schedule the notification that widget has changed for after init
@@ -181,24 +183,57 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
     super.dispose();
   }
 
-  void _handleTap() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-      if (_isExpanded) {
-        _controller.forward();
-      } else {
-        _controller.reverse().then<void>((void value) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            // Rebuild without widget.children.
+  void expand() {
+    _setExpanded(true);
+  }
+
+  void collapse() {
+    _setExpanded(false);
+  }
+
+  void toggle() {
+    _setExpanded(!_isExpanded);
+  }
+
+  // void _handleTap() {
+  //   setState(() {
+  //     _isExpanded = !_isExpanded;
+  //     if (_isExpanded) {
+  //       _controller.forward();
+  //     } else {
+  //       _controller.reverse().then<void>((void value) {
+  //         if (!mounted) {
+  //           return;
+  //         }
+  //         setState(() {
+  //           // Rebuild without widget.children.
+  //         });
+  //       });
+  //     }
+  //     PageStorage.maybeOf(context)?.writeState(context, _isExpanded, identifier: widget.listKey);
+  //   });
+  //   widget.onExpansionChanged?.call(_isExpanded);
+  // }
+  void _setExpanded(bool expanded) {
+    if (_isExpanded != expanded) {
+      setState(() {
+        _isExpanded = expanded;
+        if (_isExpanded) {
+          _controller.forward();
+        } else {
+          _controller.reverse().then<void>((void value) {
+            if (!mounted) return;
+            setState(() {
+              // Rebuild without widget.children.
+            });
           });
-        });
+        }
+        PageStorage.of(context).writeState(context, _isExpanded, identifier: widget.listKey);
+      });
+      if (widget.onExpansionChanged != null) {
+        widget.onExpansionChanged!(_isExpanded);
       }
-      PageStorage.maybeOf(context)?.writeState(context, _isExpanded, identifier: widget.listKey);
-    });
-    widget.onExpansionChanged?.call(_isExpanded);
+    }
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
@@ -258,7 +293,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                       color: _isHover ? Palette.hoverColorDefault : null
                     ),
                     child: ListTile(
-                      onTap: _handleTap,
+                      onTap: toggle,
                       leading: widget.leading ?? 
                         RotationTransition(
                           turns: _iconTurns,
