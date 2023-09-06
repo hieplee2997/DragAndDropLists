@@ -55,10 +55,12 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
 
   /// number of function will show to user
   final int numberFunction;
+
+  /// global key always recreate, so we need to pass from parent
+  final GlobalKey<ProgrammaticExpansionTileState> expansionKey;
+  GlobalKey<ProgrammaticExpansionTileState> get _expansionKey => this.expansionKey;
   
   ValueNotifier<bool> _expanded = ValueNotifier<bool>(true);
-  GlobalKey<ProgrammaticExpansionTileState> _expansionKey =
-      GlobalKey<ProgrammaticExpansionTileState>();
 
   DragAndDropListExpansion({
     this.children,
@@ -81,7 +83,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.secondFunction,
     this.numberFunction = 0, 
     this.iconFirstFunction,
-    this.iconSecondFunction
+    this.iconSecondFunction,
+    required this.expansionKey
   }) {
     _expanded.value = initiallyExpanded;
   }
