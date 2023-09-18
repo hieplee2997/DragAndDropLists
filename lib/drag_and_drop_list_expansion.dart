@@ -134,33 +134,56 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       child: expandable,
       builder: (context, dynamic error, child) {
         if (!_expanded.value) {
-           return Stack(children: <Widget>[
-          child!,
-          Positioned.fill(
-            child: DragTarget<DragAndDropItem>(
-              builder: (context, candidateData, rejectedData) {
-                if (candidateData.isNotEmpty) {}
-                return Container();
-              },
-              onWillAccept: (incoming) {
-                return true;
-              },
-              onLeave: (incoming) {},
-              onAccept: (incoming) {
-                if (children != null && children!.isNotEmpty) {
-                  params.onItemReordered!(incoming, children!.first);
-                } else {
-                  children!.add(DragAndDropItem(child: Container(), feedbackWidget: Container()));
-                  params.onItemReordered!(incoming, children!.first);
-                  print('children:$children');
-                  
-                }
-              },
-            ),
-          )
-        ]);
+          return Stack(children: <Widget>[
+            child!,
+            Positioned.fill(
+              child: DragTarget<DragAndDropItem>(
+                builder: (context, candidateData, rejectedData) {
+                  if (candidateData.isNotEmpty) {}
+                  return Container();
+                },
+                onWillAccept: (incoming) {
+                  print('go zzz');
+                  return true;
+                },
+                onLeave: (incoming) {},
+                onAccept: (incoming) {
+                  print('go here');
+                  if (children != null && children!.isNotEmpty) {
+                    params.onItemReordered!(incoming, children!.first);
+                  } else {
+                    children!.add(DragAndDropItem(child: Container(), feedbackWidget: Container()));
+                    params.onItemReordered!(incoming, children!.first);
+                  }
+                },
+              ),
+            )
+          ]);
         } else {
-          return child!;
+          return Stack(children: <Widget>[
+            child!,
+            Container(
+              height: 55,
+              child: DragTarget<DragAndDropItem>(
+                builder: (context, candidateData, rejectedData) {
+                  if (candidateData.isNotEmpty) {}
+                  return Container();
+                },
+                onWillAccept: (incoming) {
+                  return true;
+                },
+                onLeave: (incoming) {},
+                onAccept: (incoming) {
+                  if (children != null && children!.isNotEmpty) {
+                    params.onItemReordered!(incoming, children!.first);
+                  } else {
+                    children!.add(DragAndDropItem(child: Container(), feedbackWidget: Container()));
+                    params.onItemReordered!(incoming, children!.first);
+                  }
+                },
+              ),
+            ),
+          ]);
         }
       },
     );
