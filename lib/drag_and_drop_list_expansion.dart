@@ -133,7 +133,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       valueListenable: _expanded,
       child: expandable,
       builder: (context, dynamic error, child) {
-        return Stack(children: <Widget>[
+        if (!_expanded.value) {
+           return Stack(children: <Widget>[
           child!,
           Positioned.fill(
             child: DragTarget<DragAndDropItem>(
@@ -158,6 +159,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
             ),
           )
         ]);
+        } else {
+          return child!;
+        }
       },
     );
 
