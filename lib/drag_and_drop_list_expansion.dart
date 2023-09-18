@@ -133,29 +133,31 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       valueListenable: _expanded,
       child: expandable,
       builder: (context, dynamic error, child) {
-        if (!_expanded.value) {
-          return Stack(children: <Widget>[
-            child!,
-            Positioned.fill(
-              child: DragTarget<DragAndDropItem>(
-                builder: (context, candidateData, rejectedData) {
-                  if (candidateData.isNotEmpty) {}
-                  return Container();
-                },
-                onWillAccept: (incoming) {
-                  _startExpansionTimer();
-                  return false;
-                },
-                onLeave: (incoming) {
-                  _stopExpansionTimer();
-                },
-                onAccept: (incoming) {},
-              ),
-            )
-          ]);
-        } else {
-          return child!;
-        }
+        return Stack(children: <Widget>[
+          child!,
+          Positioned.fill(
+            child: DragTarget<DragAndDropItem>(
+              builder: (context, candidateData, rejectedData) {
+                if (candidateData.isNotEmpty) {}
+                return Container();
+              },
+              onWillAccept: (incoming) {
+                return true;
+              },
+              onLeave: (incoming) {},
+              onAccept: (incoming) {
+                if (children != null && children!.isNotEmpty) {
+                  params.onItemReordered!(incoming, children!.first);
+                } else {
+                  children!.add(DragAndDropItem(child: Container(), feedbackWidget: Container()));
+                  params.onItemReordered!(incoming, children!.first);
+                  print('children:$children');
+                  
+                }
+              },
+            ),
+          )
+        ]);
       },
     );
 
