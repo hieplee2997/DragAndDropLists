@@ -143,12 +143,10 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
                   return Container();
                 },
                 onWillAccept: (incoming) {
-                  print('go zzz');
                   return true;
                 },
                 onLeave: (incoming) {},
                 onAccept: (incoming) {
-                  print('go here');
                   if (children != null && children!.isNotEmpty) {
                     params.onItemReordered!(incoming, children!.first);
                   } else {
