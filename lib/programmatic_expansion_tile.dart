@@ -50,7 +50,9 @@ class ProgrammaticExpansionTile extends StatefulWidget {
     this.secondFunction,
     this.numberFunction = 0, 
     this.iconFirstFunction, 
-    this.iconSecondFunction
+    this.iconSecondFunction,
+    this.conditionToShowItemSelected = false,
+    this.itemSelectedInCollapse
   }) : super(key: key);
 
   final Key listKey;
@@ -118,6 +120,10 @@ class ProgrammaticExpansionTile extends StatefulWidget {
   /// 
   /// to expand more func, you can edit DragAndDropLists library of thaidmfinnick
   final int numberFunction;
+
+  // this 2 variables help user show item they want when expansion tile contains item is collapse
+  final itemSelectedInCollapse;
+  final bool conditionToShowItemSelected;
   @override
   ProgrammaticExpansionTileState createState() =>
       ProgrammaticExpansionTileState();
@@ -319,6 +325,8 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
               child: child,
             ),
           ),
+          if (!_isExpanded && widget.conditionToShowItemSelected && widget.itemSelectedInCollapse != null)
+          widget.itemSelectedInCollapse
         ],
       ),
     );

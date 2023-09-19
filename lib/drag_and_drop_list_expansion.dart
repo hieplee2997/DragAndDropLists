@@ -56,6 +56,11 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   /// number of function will show to user
   final int numberFunction;
 
+  // this 2 variables help user show item they want when expansion tile contains item is collapse
+  final itemSelectedInCollapse;
+  final bool conditionToShowItemSelected;
+
+
   /// global key always recreate, so we need to pass from parent
   final GlobalKey<ProgrammaticExpansionTileState> expansionKey;
   GlobalKey<ProgrammaticExpansionTileState> get _expansionKey => this.expansionKey;
@@ -84,7 +89,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.numberFunction = 0, 
     this.iconFirstFunction,
     this.iconSecondFunction,
-    required this.expansionKey
+    required this.expansionKey,
+    this.conditionToShowItemSelected = false,
+    this.itemSelectedInCollapse
   }) {
     _expanded.value = initiallyExpanded;
   }
@@ -113,6 +120,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
       numberFunction: numberFunction,
       iconFirstFunction: iconFirstFunction,
       iconSecondFunction: iconSecondFunction,
+      conditionToShowItemSelected: conditionToShowItemSelected,
+      itemSelectedInCollapse: itemSelectedInCollapse,
     );
 
     if (params.listDecoration != null) {
@@ -190,19 +199,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   }
 
   Widget generateWigetWithoutChildren() {
-    Widget expansionTileWithoutChildren = ProgrammaticExpansionTile(
-      title: title,
-      listKey: listKey,
-      subtitle: subtitle,
-      trailing: trailing,
-      leading: leading,
-      disableTopAndBottomBorders: disableTopAndBottomBorders,
-      backgroundColor: backgroundColor,
-      initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
-    );
-    return expansionTileWithoutChildren;
+    return Container();
   }
 
   List<Widget> _generateDragAndDropListInnerContents(
