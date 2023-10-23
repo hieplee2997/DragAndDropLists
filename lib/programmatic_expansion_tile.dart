@@ -41,7 +41,7 @@ class ProgrammaticExpansionTile extends StatefulWidget {
     this.onExpansionChanged,
     this.children = const <Widget>[],
     this.trailing,
-    this.initiallyExpanded = false,
+    required this.initiallyExpanded,
     this.disableTopAndBottomBorders = false,
     this.pinnedTrailing = false,
     this.firstFunction,
