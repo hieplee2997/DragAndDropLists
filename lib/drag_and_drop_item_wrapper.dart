@@ -115,7 +115,7 @@ class _DragAndDropItemWrapper extends State<DragAndDropItemWrapper>
         draggable = MeasureSize(
           onSizeChange: _setContainerSize,
           child: LongPressDraggable<DragAndDropItem>(
-            delay: const Duration(milliseconds: 150),
+            delay: const Duration(milliseconds: 125),
             data: widget.child,
             axis: widget.parameters!.axis == Axis.vertical &&
                     widget.parameters!.constrainDraggingAxis
