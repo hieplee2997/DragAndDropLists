@@ -5,9 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:context_menus/context_menus.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-// import 'package:workcake/emoji/emoji.dart';
-import 'package:workcake/common/palette.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -296,14 +293,13 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _isHover ? Palette.hoverColorDefault : null
+                      color: _isHover ? Colors.grey.withOpacity(0.1) : null
                     ),
                     child: ListTile(
                       onTap: toggle,
-                      leading: widget.leading ?? 
-                        RotationTransition(
+                      leading: RotationTransition(
                           turns: _iconTurns,
-                          child: const Icon(PhosphorIcons.caretRight, color: Color(0xffa9acb6), size: 16)
+                          child: widget.leading ?? Icon(Icons.expand_more, color: Color(0xffa9acb6), size: 16)
                         ),
                       title: widget.title,
                       subtitle: widget.subtitle,
